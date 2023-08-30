@@ -143,6 +143,11 @@ class Processor {
       sizes.push({ width: size[0], height: size[1] });
     }
 
+    /* OpenSeadragon expects the sizes to be in increasing order,
+       even though the specification does not asppear to require this.
+       This is consistent with Cantaloupe's implementation. */
+    sizes.reverse();
+
     const id = [fixupSlashes(this.baseUrl), fixupSlashes(this.id)].join('/');
     const doc = this.Implementation.infoDoc({ id, ...dim, sizes, max: this.max });
     for (const prop in doc) {
